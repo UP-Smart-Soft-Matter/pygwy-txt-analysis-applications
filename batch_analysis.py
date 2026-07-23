@@ -1,5 +1,5 @@
 import pygwy_txt_analysis
-import glob2
+import glob
 import os
 from astropy import units as u
 
@@ -10,11 +10,11 @@ x_unit = 's'
 peak_finder_settings = pygwy_txt_analysis.PeakFinderSettings(prominence=0.3e-7)
 
 basepath = pygwy_txt_analysis.get_folder_path()
-file_list_txt = glob2.glob(os.path.join(basepath, '*[!exclude]*.txt'))
+file_list_txt = glob.glob(os.path.join(basepath, '*.txt'))
 if len(file_list_txt) == 0:
     raise ValueError('No txt file found in {}'.format(basepath))
 for file_path in file_list_txt:
-    scan = pygwy_txt_analysis.PygwyTxt(file_path, scan_size_x, scan_size_y, peak_finder_settings=peak_finder_settings, skip_header=14, input_unit=u.nm)
+    scan = pygwy_txt_analysis.PygwyTxt(file_path, scan_size_x, scan_size_y, peak_finder_settings=peak_finder_settings)
     scan.plot_scan()
     scan.plot_profile()
     scan.export_stats()
